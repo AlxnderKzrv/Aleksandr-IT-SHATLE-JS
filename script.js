@@ -787,3 +787,172 @@ function printMessage(n) {
         console.log("kazdue 5 sekund")
     }, 5000);
 };
+
+
+
+
+
+
+
+
+/** 1 ////////// 10 //////////
+/** Создать функцию конструктор Dog, который наследует метод eat из объекта  animal 
+*/
+
+function Animal() {
+  this.eat = function () {
+      alert("eat");
+  }
+}
+
+function Dog() {
+  this.run = function () {
+      alert("run");
+  }
+}
+
+Dog.prototype = new Animal();
+let dog = new Dog();
+
+dog.eat();
+
+
+/** 
+Реализовать на основе прототипного наследования создание модальных окон (например, базовая функция модальное окно, с методами показа и скрытия, от которого наследуются функции создания предупреждающего окна, запрещающего окна, окна с успешным выполнением )
+*/
+
+function Modal(title, style) {
+  this.title = title;
+  this.style = style;
+  this.show = function () {};
+  this.hide = function () {};
+}
+
+function WarnModal(title) {
+  Modal.call(this, title, "background:orange; border: 1px solid orange");
+}
+
+function InfoModal(title) {
+  Modal.call(this, title, "background:blue; border: 1px solid blue");
+}
+
+function ErrorModal(title) {
+  Modal.call(this, title, "background:red; border: 1px solid red");
+}
+
+let warnModal = new WarnModal("Warn modal");
+let infoModal = new InfoModal("Info modal");
+let errorModal = new WarnModal("Error modal");
+
+console.log(warnModal);
+
+
+/** 
+Ваша задача реализовать класс Person. Вы должны заполнить метод Constructor, чтобы принять имя как строку и возраст как число, реализовать метод getInfo получения информации, который должен вернуть, например, “johns age 34”
+*/
+
+class Person {
+  constructor(name, age) { 
+      this.name = name; 
+      this.age = age;
+  } 
+  showInfo() {
+      console.log(this.name, this.age);
+   }
+}
+
+let person1 = new Person("valera", 25);
+console.log(person1);
+let person2 = new Person("pasha", 25);
+let person3 = new Person("che", 35);
+
+
+
+/** 
+Реализовать с помощью классов функциональность из задачи 3  темы “прототипы” :
+
+Реализовать на основе прототипного наследования создание модальных окон (например, базовая функция модальное окно, с методами показа и скрытия, от которого наследуются функции создания предупреждающего окна, запрещающего окна, окна с успешным выполнением )
+*/
+
+
+class Modal {
+  constructor(title, style) {}
+      show() {
+
+  }
+  hide() {}
+}
+
+class WarnModal extends Modal {
+  constructor(title) {
+      super(title, "background: red")
+  }
+}
+
+let warnModal = new WarnModal("Warn");
+warnModal.show()
+
+
+
+/** 
+Создать класс Ball, тип которого regular, если аргумент не передан, super, если передан  аргумент “superBall”
+
+ball1 = new Ball();
+ball2 = new Ball("superBall");
+
+ball1.ballType     //=> "regular"
+ball2.ballType     //=> "superBall"
+*/
+
+class Ball {
+  constructor(type) {
+      this.type = type === undefined ? "super" : "superBall";
+  }
+}
+
+let ball1 = new Ball();
+let ball2 = new Ball("new ball");
+
+
+
+
+
+
+
+/** 1 ////////// 11 Callback //////////
+Создайте асинхронную функцию getUsers(names), которая получает на вход массив логинов пользователей GitHub, запрашивает у GitHub информацию о них и возвращает массив объектов-пользователей.
+Информация о пользователе GitHub с логином USERNAME доступна по ссылке: https://api.github.com/users/USERNAME.
+
+*/
+
+const fetchUsers = async (names) => {
+  let result = await Promise.all(
+    names.map((name) =>
+      fetch(`https://api.github.com/users/${name}`).then((response) =>
+        response.json()
+      )
+    )
+  );
+  console.log(result);
+};
+
+fetchUsers(["AlxnderKzrv", "MaksZhukov"]);
+
+  
+/** 3
+Создать страницу: поле ввода имени и кнопка сохранить. При нажатии кнопки - данные сохраняются в localstorage и на экране исчезают эти поля и кнопка и  появляется сообщение -  Добро пожаловать, (имя) 
+При перезагрузке страницы, если в localstorage есть эти данные - сообщение должно остаться на экране
+
+*/
+
+let dontShow = localStorage.getItem("dontShow");
+
+if (dontShow) {
+  div.style.display = "none";
+} else {
+  div.style.display = "block";
+}
+
+checkbox.addEventListener("change", (event) => {
+  localStorage.setItem("dontShow", event.target.checked);
+});
